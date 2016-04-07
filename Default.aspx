@@ -10,6 +10,7 @@
     <form id="form1" runat="server">
     <div>
         <h1>hello</h1>
+        <a href="GraduationAgeCalculator/Default.aspx">GraduationAgeCalculator</a>
     </div>
     </form>
 </body>
