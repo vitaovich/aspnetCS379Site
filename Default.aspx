@@ -11,6 +11,8 @@
     <div>
         <h1>hello</h1>
         <a href="GraduationAgeCalculator/Default.aspx">GraduationAgeCalculator</a>
+        <br />
+        <a href="CurrencyConverter/CurrencyConverter.aspx">CurrencyConverter</a>
     </div>
     </form>
 </body>
