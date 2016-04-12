@@ -1,0 +1,36 @@
+﻿body {
+    background-color:pink;
+}
+
+#BirthInfo {
+    width:300px;
+    display:inline-block;
+    text-align:right;
+}
+
+#GraduationInfo {
+    width:300px;
+    display:inline-block;
+    text-align:right;
+}
+
+#ageArea {
+    width:700px;
+}
+
+#getAge {
+    float:right;
+}
+
+p {
+    padding:10px;
+    line-height: 2;
+}
+
+#currentDate {
+    font-weight:bold;
+    font-style:italic;
+}
+#ageResult {
+    font-weight:bold;
+}

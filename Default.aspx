@@ -8,11 +8,11 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div>
-        <h1>hello</h1>
-        <a href="GraduationAgeCalculator/Default.aspx">GraduationAgeCalculator</a>
+    <div style="text-align:center">
+        <h1>Welcome to Vitaliy's Website</h1>
+        <a href="GraduationAgeCalculator/AgeAtGraduation.aspx">GraduationAgeCalculator</a>
         <br />
-        <a href="CurrencyConverter/CurrencyConverter.aspx">CurrencyConverter</a>
+        <a href="CurrencyConverter/CurrencyConverter2.aspx">CurrencyConverter</a>
     </div>
     </form>
 </body>
