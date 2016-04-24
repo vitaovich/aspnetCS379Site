@@ -13,6 +13,12 @@
         <a href="GraduationAgeCalculator/AgeAtGraduation.aspx">GraduationAgeCalculator</a>
         <br />
         <a href="CurrencyConverter/CurrencyConverter2.aspx">CurrencyConverter</a>
+        <br/>
+        <a href="AjaxLab/Default.aspx">Ajax Lab</a>
+                <br/>
+        <a href="QueryStringsAndCookies/Cookies.aspx">Cookies Lab</a>
+                <br/>
+        <a href="QueryStringsAndCookies/QueryStringSender.aspx">Query String Lab</a>
     </div>
     </form>
 </body>
