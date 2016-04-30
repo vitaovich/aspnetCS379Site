@@ -1,0 +1,44 @@
+﻿body {
+    background-color: #696969;
+    background-image: url(backgroundImage.png);
+    background-size: cover;
+    background-position: right top;
+    background-repeat: no-repeat;
+
+}
+
+.topMenu {
+    display:inline-block;
+    color:#444;
+    border:1px solid #CCC;
+    background:#00bfff;
+    color: white;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 10px;
+    text-align: center;
+}
+.topMenu:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+
+#Heading {
+    color: #f5fffa;
+    font-weight: bold;
+    font-size: 50px;
+    font-family: sans-serif;
+    padding-left: 5px;
+}
+
+#content {
+
+    background-color: #444444;
+}
+
+#TopMenu {
+    padding-top: 25px;
+    padding-left: 25px;
+}

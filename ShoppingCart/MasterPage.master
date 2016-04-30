@@ -1,0 +1,27 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="ShoppingCart_MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>V site</title>
+    <link rel="stylesheet" href="/ShoppingCart/StyleSheet.css" type="text/css" />
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id="content">
+        <asp:Label ID="Heading" runat="server" Text="Music Central"></asp:Label>
+        <div id ="TopMenu">
+            <asp:Button ID="Shopping" CssClass="topMenu" runat="server" Text="Shopping" />
+            <asp:Button ID="ViewCart" CssClass="topMenu" OnClick="ViewCart_OnClick" runat="server" Text="View Cart" />
+            <asp:Button ID="Inventory" CssClass="topMenu" runat="server" Text="About" />
+        </div>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>
