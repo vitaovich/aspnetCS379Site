@@ -12,15 +12,17 @@
 <body>
     <form id="form1" runat="server">
     <div id="content">
-        <asp:Label ID="Heading" runat="server" Text="Music Central"></asp:Label>
+        <asp:Label ID="Heading" runat="server" Text="Movie Central"></asp:Label>
         <div id ="TopMenu">
-            <asp:Button ID="Shopping" CssClass="topMenu" runat="server" Text="Shopping" />
+            <asp:Button ID="Shopping" CssClass="topMenu" OnClick=Shopping_OnClick runat="server" Text="Shopping" />
             <asp:Button ID="ViewCart" CssClass="topMenu" OnClick="ViewCart_OnClick" runat="server" Text="View Cart" />
             <asp:Button ID="Inventory" CssClass="topMenu" runat="server" Text="About" />
+            <br/>
+
         </div>
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+            <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         
-        </asp:ContentPlaceHolder>
+            </asp:ContentPlaceHolder>
     </div>
     </form>
 </body>

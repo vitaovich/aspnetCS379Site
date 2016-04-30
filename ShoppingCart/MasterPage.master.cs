@@ -16,4 +16,9 @@ public partial class ShoppingCart_MasterPage : System.Web.UI.MasterPage
     {
         Response.Redirect("~");
     }
+
+    protected void Shopping_OnClick(object sender, EventArgs e)
+    {
+        Response.Redirect("~/ShoppingCart/Default.aspx");
+    }
 }

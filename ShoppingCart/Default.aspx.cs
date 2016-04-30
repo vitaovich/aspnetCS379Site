@@ -6,10 +6,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Image = System.Web.UI.WebControls.Image;
 
 public partial class ShoppingCart_Default : System.Web.UI.Page
 {
-    private List<MovieInfo> transactions;
+    private List<MovieInfo> Movies;
     private Table tbl;
 
     protected void Page_Load(object sender, EventArgs e)
@@ -22,7 +23,7 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
         {
             try
             {
-                this.transactions = new List<MovieInfo>();
+                this.Movies = new List<MovieInfo>();
                 //  Get database objects...
                 //  Connect to database and open...
                 cn = new OleDbConnection();
@@ -30,38 +31,18 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
                 if (Request.UserHostAddress.ToString().Equals("::1"))
                 {
                     // Local server...
-                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Vitaliy\Source\Repos\aspnetCS379Site\App_Data\SalesTransactionDB.accdb;Persist Security Info=False;";
+                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Vitaliy\Source\Repos\aspnetCS379Site\App_Data\movieDB.accdb;Persist Security Info=False;";
                 }
                 else
                 {
                     // Remote server...  (Note difference for older version of Access.)
-                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=h:\root\home\valekhnovich-001\www\valekhnovichsite\App_Data\SalesTransactionDB.accdb";
+                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=h:\root\home\valekhnovich-001\www\valekhnovichsite\App_Data\movieDB.accdb";
                 }
 
-                // Create the SQL command...
-                //                cmd = new OleDbCommand("SELECT * " +
-                //                                       "FROM ([Customer] c " +
-                //                                       "    inner join " +
-                //                                       "[Invoice] i " +
-                //                                       "    on c.CustNumber = i.CustNumber " +
-                //                                       " )   inner join " +
-                //                                       "[LineItemID] ld " +
-                //                                       "    on i.InvoiceNumber = ld.InvoiceNumber " +
-                //                                       "where i.Status = 'Open' "
-                //                                       , cn);
-                //
-                //                cn.Open();
-
-                cmd = new OleDbCommand("SELECT * " +
-                                       "FROM " +
-                                       "[Customer] c,  [Invoice] i, [LineItemID] ld, [LineItem] li, [Inventory] inv, [Supplier] s " +
-                                       "where " +
-                                       "c.CustNumber = i.CustNumber " +
-                                       "AND i.InvoiceNumber = ld.InvoiceNumber " +
-                                       "AND ld.InvoiceNumber = li.LineItemID " +
-                                       "AND li.SKU = inv.SKU " +
-                                       "AND inv.SupplierID = s.SupplierID " +
-                                       "AND i.Status = 'Open' "
+                cmd = new OleDbCommand(
+                    "SELECT * " +
+                    "FROM " +
+                    "[Movies] "
                     , cn);
 
                 cn.Open();
@@ -72,40 +53,15 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
                 // Iterate over the dataset, create orders and add to collection...
                 while (dr.Read())
                 {
-                    CustomerInfo customerInfo = new CustomerInfo(
-                        int.Parse(dr["c.CustNumber"].ToString()),
-                        int.Parse(dr["c.Phone"].ToString()),
-                        dr["c.Company"].ToString(),
-                        dr["c.Contact"].ToString(),
-                        dr["Billing"].ToString(),
-                        dr["Shipping"].ToString()
+                    MovieInfo movieInfo = new MovieInfo(
+ 
+                        dr["MovieName"].ToString(),
+                        dr["Description"].ToString(),
+                        dr["imageUrl"].ToString(),
+                        int.Parse(dr["Rating"].ToString()),
+                        double.Parse(dr["Price"].ToString())
                         );
-                    Invoice invoice = new Invoice(
-                        int.Parse(dr["i.InvoiceNumber"].ToString()),
-                        dr["Shipped Date"].ToString(),
-                        dr["Order Date"].ToString(),
-                        dr["Status"].ToString(),
-                        dr["i.CustNumber"].ToString());
-                    LineItem lineItem = new LineItem(
-                        int.Parse(dr["QuantityOrdered"].ToString()),
-                        dr["li.SKU"].ToString(),
-                        dr["LineItemID"].ToString());
-                    Inventory inventory = new Inventory(
-                        int.Parse(dr["QOH"].ToString()),
-                        int.Parse(dr["UnitWeight"].ToString()),
-                        double.Parse(dr["UnitPrice"].ToString()),
-                        dr["inv.SKU"].ToString(),
-                        dr["inv.SupplierID"].ToString(),
-                        dr["Description"].ToString()
-                        );
-                    Supplier supplier = new Supplier(
-                        dr["s.SupplierID"].ToString(),
-                        int.Parse(dr["Phone#"].ToString()),
-                        dr["s.Company"].ToString(),
-                        dr["s.Contact"].ToString(),
-                        dr["Addresses"].ToString()
-                        );
-                    transactions.Add(new Transaction(customerInfo, invoice, lineItem, inventory, supplier));
+                    Movies.Add(movieInfo);
                 }
 
                 dr.Close();
@@ -113,7 +69,7 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
             }
             catch (Exception err)
             {
-                lblStatus.Text = err.Message;
+//                lblStatus.Text = err.Message;
                 return;
             }
 
@@ -122,52 +78,60 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
         try
         {
             //  Restore the orders array from the viewstate...
-            if (transactions == null)
+            if (Movies == null)
             {
-                transactions = (List<Transaction>)ViewState["theOrders"];
+                Movies = (List<MovieInfo>)ViewState["theOrders"];
             }
-
+            Image image;
             Label lbl;
-            int count = 0;
-            double total = 0;
-            foreach (Transaction transaction in transactions)
+            Panel pnl;
+            foreach (MovieInfo movieInfo in Movies)
             {
-                count++;
+                pnl = new Panel();
                 lbl = new Label();
-                lbl.Text = "ORDER #" + count;
-                lbl.Font.Bold = true;
-                Page.Controls.Add(lbl);
+                image = new Image {ImageUrl = movieInfo.ImageUrl};
+                image.CssClass = "imageSizing";
 
-                tbl = new Table();
-                tbl.BorderStyle = BorderStyle.Solid;
-                tbl.BorderColor = Color.FromArgb(0xBDFCC9);
-                tbl.BackColor = Color.Cornsilk;
-                tbl.EnableViewState = true;
-                transaction.SalesInfo(tbl);
-                Page.Controls.Add(tbl);
-                total += transaction.LineItem.QuantityOrdered * transaction.Inventory.UnitPrice;
+                pnl.CssClass = "panel";
+
+                lbl.Text = movieInfo.MovieName + " $" + movieInfo.Price;
+                lbl.CssClass = "labels";
+                lbl.Width = pnl.Width;
+
+                //                tbl = new Table();
+                //                tbl.BorderStyle = BorderStyle.Solid;
+                //                tbl.BorderColor = Color.FromArgb(0xBDFCC9);
+                //                tbl.BackColor = Color.Cornsilk;
+                //                tbl.EnableViewState = true;
+                //                movieInfo.SalesInfo(tbl);
+                //                Page.Controls.Add(tbl);
+                //                total += movieInfo.LineItem.QuantityOrdered * movieInfo.Inventory.UnitPrice;
+                pnl.Controls.Add(image);
+                pnl.Controls.Add(new LiteralControl("<br />"));
+                pnl.Controls.Add(lbl);
+                PlaceHolder1.Controls.Add(pnl);
             }
-            lbl = new Label();
-            lbl.Text = "INVOICE SUMMARY";
-            lbl.Font.Bold = true;
-            Page.Controls.Add(lbl);
-            tbl = new Table();
-            TableRow row = new TableRow();
-            row.Cells.Add(addCell("Order count"));
-            row.Cells.Add(addCell("Average Order Amount"));
-            row.Cells.Add(addCell("Total Sales"));
-            tbl.Rows.Add(row);
-            row = new TableRow();
-            row.Cells.Add(addCell(count.ToString()));
-            row.Cells.Add(addCell("$" + (total / count)));
-            row.Cells.Add(addCell("$" + total));
-            tbl.Rows.Add(row);
-            Page.Controls.Add(tbl);
+//            lbl = new Label();
+//            lbl.Text = "INVOICE SUMMARY";
+//            lbl.Font.Bold = true;
+//            Page.Controls.Add(lbl);
+//            tbl = new Table();
+//            TableRow row = new TableRow();
+//            row.Cells.Add(addCell("Order count"));
+//            row.Cells.Add(addCell("Average Order Amount"));
+//            row.Cells.Add(addCell("Total Sales"));
+//            tbl.Rows.Add(row);
+//            row = new TableRow();
+//            row.Cells.Add(addCell(count.ToString()));
+//            row.Cells.Add(addCell("$" + (total / count)));
+//            row.Cells.Add(addCell("$" + total));
+//            tbl.Rows.Add(row);
+//            Page.Controls.Add(tbl);
         }
 
         catch (Exception err)
         {
-            lblStatus.Text = err.Message;
+//            lblStatus.Text = err.Message;
         }
     }
 

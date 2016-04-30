@@ -17,11 +17,15 @@
     cursor:pointer;
     vertical-align:middle;
     max-width: 100px;
-    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     text-align: center;
+    font-size: 15px;
 }
-.topMenu:active {
-    color:red;
+.topMenu:hover {
+    background:#696969;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
 }
 
@@ -36,9 +40,41 @@
 #content {
 
     background-color: #444444;
+    padding: 20px;
 }
 
 #TopMenu {
-    padding-top: 25px;
     padding-left: 25px;
+    padding-top: 25px;
+}
+
+.imageSizing {
+    width: 150px;
+    height: 200px;
+    padding: 15px;
+}
+
+.contentArea {
+    background-color: #222222;
+    padding: 10px;
+}
+
+.panel {
+    border: 2px #1e90ff;
+    border-style: solid;
+    width: 200px;
+    display:inline-block;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.labels {
+    color: white;
+    font-family: sans-serif;
+}
+
+.panel:hover {
+    background:#ff8c00;
+    border-style: none;
+    box-shadow: 0 0 10px -1px rgba(0,0,0,0.6);
 }
