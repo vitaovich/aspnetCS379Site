@@ -4,7 +4,7 @@
     background-size: cover;
     background-position: right top;
     background-repeat: no-repeat;
-
+  
 }
 
 .topMenu {
@@ -23,13 +23,16 @@
     padding-bottom: 10px;
     text-align: center;
     font-size: 15px;
+    font-family: sans-serif;
+    text-decoration: none;
 }
+
 .topMenu:hover {
     background:#696969;
     box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
 }
 
-#Heading {
+.Heading {
     color: #f5fffa;
     font-weight: bold;
     font-size: 50px;
@@ -40,7 +43,12 @@
 #content {
 
     background-color: #444444;
-    padding: 20px;
+    padding: 30px;
+     margin: auto;
+    width: auto;
+    max-width: 1150px;
+    min-width: 685px;
+   
 }
 
 #TopMenu {
@@ -54,27 +62,117 @@
     padding: 15px;
 }
 
+.ratings {
+    color: gold;
+    font-family: sans-serif;
+}
+
 .contentArea {
     background-color: #222222;
     padding: 10px;
 }
 
+li {
+    display: inline;
+}
+
 .panel {
     border: 2px #1e90ff;
     border-style: solid;
-    width: 200px;
-    display:inline-block;
+    width: 195px;
+    height: 300px;
+    display: inline-block;
     text-align: center;
     padding-bottom: 10px;
+    text-decoration: none;
+    margin: 10px;
 }
 
 .labels {
     color: white;
     font-family: sans-serif;
+    padding: 20px;
+    font-size: 80%;
+}
+
+.removeButton {
+    border: 2px solid ##deb887;
+    background: #ffffff;
+    color: #333333;
+    float: right;
+    margin-right: 20px;
+}
+
+.details {
+    color: white;
+    font-family: sans-serif;
+    height: auto;
+}
+
+.MovieHeading {
+    color: #f5fffa;
+    font-weight: bold;
+    font-size: 50px;
+    font-family: sans-serif;
 }
 
 .panel:hover {
-    background:#ff8c00;
-    border-style: none;
+    background:#1e90ff;
     box-shadow: 0 0 10px -1px rgba(0,0,0,0.6);
+}
+
+
+.left_part {
+    display: inline-block;
+    width: 31%;
+}
+.right_part {
+    display: inline-block;
+    width: 67%;
+    height: 100%;
+    float: right;
+    text-align: center;
+}
+
+.table {
+    border: 2px solid #00bfff;
+    width: 80%;
+    background-color: #333333;
+}
+
+.cell {
+    color: #f5fffa;
+    border-right: 2px solid #00bfff;
+    padding: 20px;
+    font-family: fantasy;
+    text-align: left;
+}
+
+.row {
+    border: 2px solid #00bfff;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.listmenu {
+    margin: 0;
+}
+
+.pageButtons {
+    color:#444;
+    border:1px solid #CCC;
+    background:#ff8c00;
+    color: white;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding-left: 15px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 15px;
 }

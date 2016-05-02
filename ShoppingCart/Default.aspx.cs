@@ -31,7 +31,7 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
                 if (Request.UserHostAddress.ToString().Equals("::1"))
                 {
                     // Local server...
-                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Vitaliy\Source\Repos\aspnetCS379Site\App_Data\movieDB.accdb;Persist Security Info=False;";
+                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Vitaliy\Desktop\CS379\Git\aspDotNetWebsite\App_Data\movieDB.accdb;Persist Security Info=False;";
                 }
                 else
                 {
@@ -54,7 +54,7 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
                 while (dr.Read())
                 {
                     MovieInfo movieInfo = new MovieInfo(
- 
+                        dr["ID"].ToString(),
                         dr["MovieName"].ToString(),
                         dr["Description"].ToString(),
                         dr["imageUrl"].ToString(),
@@ -82,34 +82,38 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
             {
                 Movies = (List<MovieInfo>)ViewState["theOrders"];
             }
+            Label lbl, ratings;
             Image image;
-            Label lbl;
-            Panel pnl;
+            HyperLink linkButton;
             foreach (MovieInfo movieInfo in Movies)
             {
-                pnl = new Panel();
+                image = new Image();
+                linkButton = new HyperLink();
                 lbl = new Label();
-                image = new Image {ImageUrl = movieInfo.ImageUrl};
-                image.CssClass = "imageSizing";
+                ratings = new Label();
 
-                pnl.CssClass = "panel";
+                image.ImageUrl = movieInfo.ImageUrl;
+                image.CssClass = "imageSizing";
 
                 lbl.Text = movieInfo.MovieName + " $" + movieInfo.Price;
                 lbl.CssClass = "labels";
-                lbl.Width = pnl.Width;
+                lbl.Width = linkButton.Width;
 
-                //                tbl = new Table();
-                //                tbl.BorderStyle = BorderStyle.Solid;
-                //                tbl.BorderColor = Color.FromArgb(0xBDFCC9);
-                //                tbl.BackColor = Color.Cornsilk;
-                //                tbl.EnableViewState = true;
-                //                movieInfo.SalesInfo(tbl);
-                //                Page.Controls.Add(tbl);
-                //                total += movieInfo.LineItem.QuantityOrdered * movieInfo.Inventory.UnitPrice;
-                pnl.Controls.Add(image);
-                pnl.Controls.Add(new LiteralControl("<br />"));
-                pnl.Controls.Add(lbl);
-                PlaceHolder1.Controls.Add(pnl);
+                ratings.Text = "Rating: " + movieInfo.Rating  + " / 5";
+                ratings.CssClass = "ratings";
+
+                linkButton.CssClass = "panel";
+                linkButton.ID = movieInfo.ID;
+                linkButton.ClientIDMode = ClientIDMode.Static;
+                linkButton.Controls.Add(image);
+                linkButton.Controls.Add(new LiteralControl("<br />"));
+                linkButton.Controls.Add(lbl);
+                linkButton.Controls.Add(new LiteralControl("<br />"));
+                linkButton.Controls.Add(ratings);
+                linkButton.NavigateUrl = "./Details.aspx?ProductID=" + movieInfo.ID;
+                
+
+                content.Controls.Add(linkButton);
             }
 //            lbl = new Label();
 //            lbl.Text = "INVOICE SUMMARY";
@@ -135,6 +139,13 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
         }
     }
 
+    protected void Movie_OnClick(object sender, EventArgs e)
+    {
+        ImageButton image = (ImageButton) sender;
+        Session["CurrentMovie"] = image.ID;
+        Response.Redirect("Details.aspx");
+    }
+
     public static TableCell addCell(String pText)
     {
         TableCell cell = new TableCell();
@@ -144,21 +155,5 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
         return cell;
     }
 
-    public class MovieInfo
-    {
-        public string MovieName { get; private set; }
-        public string Description { get; private set; }
-        public string ImageUrl { get; private set; }
-        public int Rating { get; private set; }
-        public double Price { get; private set; }
 
-        public MovieInfo(string movieName, string description, string imageUrl, int rating, double price)
-        {
-            MovieName = movieName;
-            Description = description;
-            ImageUrl = imageUrl;
-            Rating = rating;
-            Price = price;
-        }
-    }
 }

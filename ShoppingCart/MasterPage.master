@@ -12,17 +12,17 @@
 <body>
     <form id="form1" runat="server">
     <div id="content">
-        <asp:Label ID="Heading" runat="server" Text="Movie Central"></asp:Label>
-        <div id ="TopMenu">
-            <asp:Button ID="Shopping" CssClass="topMenu" OnClick=Shopping_OnClick runat="server" Text="Shopping" />
-            <asp:Button ID="ViewCart" CssClass="topMenu" OnClick="ViewCart_OnClick" runat="server" Text="View Cart" />
-            <asp:Button ID="Inventory" CssClass="topMenu" runat="server" Text="About" />
-            <br/>
-
-        </div>
-            <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
-        
+        <asp:Label ID="Heading" CssClass="Heading" runat="server" Text="Movie Hub"></asp:Label>
+        <ul id ="TopMenu" class="listmenu" >
+            <li><asp:HyperLink ID="Movie"  CssClass="topMenu" NavigateUrl="Default.aspx" runat="server">Movies</asp:HyperLink></li>
+            <li><asp:HyperLink ID="ViewCart"  CssClass="topMenu" NavigateUrl="ViewCart.aspx" runat="server">View Cart</asp:HyperLink></li>
+            <li><asp:HyperLink ID="About"  CssClass="topMenu" NavigateUrl="Default.aspx" runat="server">About</asp:HyperLink></li>
+        </ul>
+        <asp:Panel ID="ContentArea" CssClass="contentArea" runat="server">
+            <asp:ContentPlaceHolder id="ContentPlaceHolder1" ClientIDMode="Static" runat="server">
+                
             </asp:ContentPlaceHolder>
+        </asp:Panel>
     </div>
     </form>
 </body>
