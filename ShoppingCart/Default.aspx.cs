@@ -31,7 +31,7 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
                 if (Request.UserHostAddress.ToString().Equals("::1"))
                 {
                     // Local server...
-                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Vitaliy\Desktop\CS379\Git\aspDotNetWebsite\App_Data\movieDB.accdb;Persist Security Info=False;";
+                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=V:\Code\VisualStudio\Websites\cs379WebSite\App_Data\movieDB.accdb;Persist Security Info=False;";
                 }
                 else
                 {
