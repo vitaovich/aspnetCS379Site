@@ -10,7 +10,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <asp:Label ID="heading" CssClass="Heading" runat="server" text="Shopping Cart"></asp:Label>
     <asp:PlaceHolder ID="Content" runat="server"></asp:PlaceHolder>
-    <asp:Table ID="tbl" CssClass="table" GridLines="Both" runat="server"></asp:Table>
+    <asp:Table ID="tbl" CssClass="table"  runat="server">
+    </asp:Table>
+    <asp:Button ID="CheckOut" CssClass="removeButton" runat="server" Text="Check Out" />
+    <asp:Button ID="ContinueShop" CssClass="removeButton" runat="server" Text="Continue Shopping" />
 
 </asp:Content>
 

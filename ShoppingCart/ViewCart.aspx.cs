@@ -17,15 +17,27 @@ public partial class ShoppingCart_ViewCart : System.Web.UI.Page
         {
             TableRow row = null;
             int count = 0;
+            TableCell cell;
+            row = new TableRow();
+            row.Cells.Add(addCell("Order summary", "headCell"));
+            row.Cells.Add(addCell("Unit Price", "headCell"));
+            row.Cells.Add(addCell("Quantity", "headCell"));
+            row.Cells.Add(addCell("Extension", "headCell"));
+            row.Cells.Add(addCell("Weight", "headCell"));
+            tbl.Rows.Add(row);
+
             foreach (MovieInfo movieInfo in cart)
             {
                 if (movieInfo != null)
                 {
                     row = new TableRow();
                     row.CssClass = "row";
-                    row.Cells.Add(addCell(movieInfo.MovieName));
-                    row.Cells.Add(addCell("$" + movieInfo.Price));
-                    TableCell cell = new TableCell();
+                    row.Cells.Add(addCell(movieInfo.MovieName, "cell"));
+                    row.Cells.Add(addCell("$" + movieInfo.Price, "cell"));
+                    row.Cells.Add(addCell("4" , "cell"));
+                    row.Cells.Add(addCell("14.67" , "cell"));
+                    row.Cells.Add(addCell("7.4" , "cell"));
+                    cell = new TableCell();
                     Button button = new Button();
                     button.Text = "Remove this Item.";
                     button.ID = movieInfo.MovieName + "_" + count;
@@ -43,8 +55,14 @@ public partial class ShoppingCart_ViewCart : System.Web.UI.Page
                 {
                     tbl.Rows.Add(row);
                 }
-
             }
+            row = new TableRow();
+            row.Cells.Add(addCell("", ""));
+            row.Cells.Add(addCell("", ""));
+            row.Cells.Add(addCell("Count", "headCell"));
+            row.Cells.Add(addCell("Total", "headCell"));
+            row.Cells.Add(addCell("Something", "headCell"));
+            tbl.Rows.Add(row);
         }
         else
         {
@@ -57,10 +75,10 @@ public partial class ShoppingCart_ViewCart : System.Web.UI.Page
         
     }
 
-    private static TableCell addCell(String pText)
+    private static TableCell addCell(string pText, string CssClass)
     {
         TableCell cell = new TableCell();
-        cell.CssClass = "cell";
+        cell.CssClass = CssClass;
         cell.Text = pText;
         
         cell.HorizontalAlign = HorizontalAlign.Center;

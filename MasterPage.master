@@ -1,0 +1,26 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <div>
+        <ul id ="Menu" >
+            <li><asp:HyperLink ID="Home" NavigateUrl="Default.aspx" runat="server">Home</asp:HyperLink></li>
+            <li><asp:HyperLink ID="Projects" NavigateUrl="ViewCart.aspx" runat="server">Projects</asp:HyperLink></li>
+            <li><asp:HyperLink ID="About" NavigateUrl="Default.aspx" runat="server">About</asp:HyperLink></li>
+            <li><asp:HyperLink ID="Contact" NavigateUrl="Default.aspx" runat="server">Contact</asp:HyperLink></li>
+        </ul>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>
