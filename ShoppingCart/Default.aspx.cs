@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Web;
@@ -15,9 +16,9 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        OleDbConnection cn;
-        OleDbCommand cmd;
-        OleDbDataReader dr;
+        SqlConnection cn;
+        SqlCommand cmd;
+        SqlDataReader dr;
 
         if (IsPostBack == false)
         {
@@ -26,20 +27,21 @@ public partial class ShoppingCart_Default : System.Web.UI.Page
                 this.Movies = new List<MovieInfo>();
                 //  Get database objects...
                 //  Connect to database and open...
-                cn = new OleDbConnection();
+                cn = new SqlConnection();
 
                 if (Request.UserHostAddress.ToString().Equals("::1"))
                 {
                     // Local server...
-                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=V:\Code\VisualStudio\Websites\cs379WebSite\App_Data\movieDB.accdb;Persist Security Info=False;";
+                    cn.ConnectionString = @"Data Source=VITALIY-PC;Initial Catalog=CS379Website;Integrated Security=True";
                 }
                 else
                 {
                     // Remote server...  (Note difference for older version of Access.)
-                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=h:\root\home\valekhnovich-001\www\valekhnovichsite\App_Data\movieDB.accdb";
+                    cn.ConnectionString = @"Data Source=SQL5019.Smarterasp.net;Initial Catalog=DB_9FA50D_valekhnovich;User Id=DB_9FA50D_valekhnovich_admin;Password=esm001fh;"
+;
                 }
 
-                cmd = new OleDbCommand(
+                cmd = new SqlCommand(
                     "SELECT * " +
                     "FROM " +
                     "[Movies] "
