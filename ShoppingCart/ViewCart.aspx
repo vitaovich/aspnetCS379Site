@@ -12,8 +12,8 @@
     <asp:PlaceHolder ID="Content" runat="server"></asp:PlaceHolder>
     <asp:Table ID="tbl" CssClass="table"  runat="server">
     </asp:Table>
-    <asp:Button ID="CheckOut" CssClass="removeButton" runat="server" Text="Check Out" />
-    <asp:Button ID="ContinueShop" CssClass="removeButton" runat="server" Text="Continue Shopping" />
+    <asp:Button ID="CheckOut" CssClass="removeButton" OnClick="CheckOut_OnClick" runat="server" Text="Check Out" />
+    <asp:Button ID="ContinueShop" CssClass="removeButton" OnClick="ContinueShop_OnClick" runat="server" Text="Continue Shopping" />
 
 </asp:Content>
 

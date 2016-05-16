@@ -17,7 +17,11 @@
             <br/>
               <br/>
             <asp:Button ID="AddToCart" CssClass="pageButtons" OnClick="AddToCart_OnClick" runat="server" Text="Add to cart" />
-            <asp:Button ID="ViewCart" CssClass="pageButtons" runat="server" OnClick="ViewCart_OnClick" Text="View cart" />                     
+            <asp:Button ID="ViewCart" CssClass="pageButtons" runat="server" OnClick="ViewCart_OnClick" Text="View cart" />
+              <br/>
+              <br/>
+              <asp:Label ID="qLbl" CssClass="details" runat="server" Text="Quantity: "></asp:Label>
+              <asp:DropDownList ID="Quantity" runat="server"></asp:DropDownList>                 
           </div> 
 </asp:Content>
 

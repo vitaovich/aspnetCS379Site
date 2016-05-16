@@ -15,8 +15,10 @@ public class MovieInfo
     public string ImageUrl { get; private set; }
     public int Rating { get; private set; }
     public double Price { get; private set; }
+    public double Weight { get; private set; }
+    public int Quantity { get; set; }
 
-    public MovieInfo(string id, string movieName, string description, string imageUrl, int rating, double price)
+    public MovieInfo(string id, string movieName, string description, string imageUrl, int rating, double price, double weight)
     {
         ID = id;
         MovieName = movieName;
@@ -24,5 +26,7 @@ public class MovieInfo
         ImageUrl = imageUrl;
         Rating = rating;
         Price = price;
+        Weight = weight;
+        Quantity = 1;
     }
 }

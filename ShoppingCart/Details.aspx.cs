@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Web;
@@ -10,107 +10,122 @@ using Image = System.Web.UI.WebControls.Image;
 
 public partial class ShoppingCart_Details : System.Web.UI.Page
 {
-    OleDbConnection cn;
-    OleDbCommand cmd;
-    OleDbDataReader dr;
+    SqlConnection cn;
+    SqlCommand cmd;
+    SqlDataReader dr;
     private MovieInfo movieInfo;
-    public List<MovieInfo> AddedMovies;
+    public List<MovieInfo> AddedMovies, content;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
         if (!IsPostBack)
         {
+            content = (List<MovieInfo>)ViewState["content"];
+            string movieID = Request.QueryString["ProductID"];
             try
             {
-                AddedMovies = (List<MovieInfo>)Session["cart"];
-                if (AddedMovies == null)
+                if (content == null)
                 {
-                    Session["cart"] = new List<MovieInfo>();
+                    content = GrabMovies();
                 }
+                MovieInfo currentMovie = content.First(eb => eb.ID.Equals(movieID));
+                Session["currentMovie"] = currentMovie;
+                Image1.ImageUrl = currentMovie.ImageUrl;
 
-                //  Get database objects...
-                //  Connect to database and open...
-                cn = new OleDbConnection();
-
-                if (Request.UserHostAddress.ToString().Equals("::1"))
+                MovieName.Text = currentMovie.MovieName;
+                Ratings.Text = " Movie Rating: " + currentMovie.Rating + "/ 5";
+                Description.Text = currentMovie.Description;
+                ListItem quant;
+                for (int i = 1; i < 26; i++)
                 {
-                    // Local server...
-                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=V:\Code\VisualStudio\Websites\cs379WebSite\App_Data\movieDB.accdb;Persist Security Info=False;";
+                    quant = new ListItem(i + "");
+                    Quantity.Items.Add(quant);
                 }
-                else
-                {
-                    // Remote server...  (Note difference for older version of Access.)
-                    cn.ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=h:\root\home\valekhnovich-001\www\valekhnovichsite\App_Data\movieDB.accdb";
-                }
-                string movieID = Request.QueryString["ProductID"];
-
-                cmd = new OleDbCommand(
-                    "SELECT * " +
-                    "FROM " +
-                    "[Movies] " +
-                    "WHERE ID = " + movieID
-                    , cn);
-
-                cn.Open();
-
-                // Execute the SQL statement and get the dataset...
-                dr = cmd.ExecuteReader();
-
-                // Iterate over the dataset, create orders and add to collection...
-                while (dr.Read())
-                {
-                    movieInfo = new MovieInfo(
-                        dr["ID"].ToString(),
-                        dr["MovieName"].ToString(),
-                        dr["Description"].ToString(),
-                        dr["imageUrl"].ToString(),
-                        int.Parse(dr["Rating"].ToString()),
-                        double.Parse(dr["Price"].ToString())
-                        );
-                }
-                Session["currentMovie"] = movieInfo;
-                Image1.ImageUrl = movieInfo.ImageUrl;
-
-                MovieName.Text = movieInfo.MovieName;
-                Ratings.Text = " Movie Rating: "+ movieInfo.Rating + "/ 5";
-                Description.Text = movieInfo.Description;
-
-                dr.Close();
-                cn.Close();
             }
             catch (Exception err)
             {
                 //                lblStatus.Text = err.Message;
                 return;
             }
-
         }  //  End !IsPostBack
+
     }
 
     protected void AddToCart_OnClick(object sender, EventArgs e)
     {
-        movieInfo = (MovieInfo) Session["currentMovie"];
-        bool containsMovie = false;
+        movieInfo = (MovieInfo)Session["currentMovie"];
+
         if (movieInfo != null)
         {
             List<MovieInfo> movies = (List<MovieInfo>)Session["cart"];
+            int quantity;
 
-            foreach (MovieInfo info in movies)
+            if (movies == null)
+            {
+                movies = new List<MovieInfo>();
+            }
+
+            foreach (MovieInfo info in movies.ToList())
             {
                 if (info.MovieName.Equals(movieInfo.MovieName))
                 {
-                    containsMovie = true;
+                    movies.Remove(info);
                 }
             }
-            if (!containsMovie)
-            {
-                movies.Add(movieInfo);
-                Session["cart"] = movies;
-            }
+            quantity = Int32.Parse(Quantity.Text);
+            movieInfo.Quantity = quantity;
+            movies.Add(movieInfo);
+            Session["cart"] = movies;
         }
         Response.Redirect("ViewCart.aspx");
     }
+
+    private List<MovieInfo> GrabMovies()
+    {
+            List<MovieInfo> cont = new List<MovieInfo>();
+            //  Get database objects...
+            //  Connect to database and open...
+            cn = new SqlConnection();
+
+            if (Request.UserHostAddress.ToString().Equals("::1"))
+            {
+                // Local server...
+                cn.ConnectionString = @"Data Source=SQL5019.Smarterasp.net;Initial Catalog=DB_9FA50D_valekhnovich;User Id=DB_9FA50D_valekhnovich_admin;Password=esm001fh;";
+            }
+            else
+            {
+                // Remote server...  (Note difference for older version of Access.)
+                cn.ConnectionString = @"Data Source=SQL5019.Smarterasp.net;Initial Catalog=DB_9FA50D_valekhnovich;User Id=DB_9FA50D_valekhnovich_admin;Password=esm001fh;";
+            }
+
+            cmd = new SqlCommand(
+                "SELECT * " +
+                "FROM " +
+                "[Movies] "
+                , cn);
+            cn.Open();
+
+            // Execute the SQL statement and get the dataset...
+            dr = cmd.ExecuteReader();
+
+            // Iterate over the dataset, create orders and add to collection...
+            while (dr.Read())
+            {
+                movieInfo = new MovieInfo(
+                    dr["ID"].ToString(),
+                    dr["MovieName"].ToString(),
+                    dr["Description"].ToString(),
+                    dr["imageUrl"].ToString(),
+                    int.Parse(dr["Rating"].ToString()),
+                    double.Parse(dr["Price"].ToString()),
+                    double.Parse(dr["weight"].ToString())
+                    );
+                cont.Add(movieInfo);
+            }
+            dr.Close();
+            cn.Close();
+            return cont;
+    } 
 
     protected void ViewCart_OnClick(object sender, EventArgs e)
     {

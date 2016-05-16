@@ -7,6 +7,34 @@
   
 }
 
+.summary {
+    border: 2px white solid;
+    width: 50%;
+    margin: 10px;
+    display: inline-block;
+}
+
+.titles {
+    color: white;
+    font-family: sans-serif;
+    margin: 20px;
+    font-size: 18px;
+}
+
+.dets {
+    color: white;
+    font-family: sans-serif;
+    font-size: 12px;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.error {
+    color: red;
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
 .topMenu {
     display:inline-block;
     color:#444;
